@@ -211,6 +211,22 @@
         <a href="clothing_sportsPants.html" class="btn">Description</a>
       </article>
     </section>
+  <div id="chatbot">
+  <div id="chat-header">Better Buy Assistant</div>
+  <div id="chat-body">
+    <p><strong>Quick Questions:</strong></p>
+    <div id="faq-buttons">
+      <button onclick="sendFAQ('delivery')">Delivery</button>
+      <button onclick="sendFAQ('returns')">Returns</button>
+      <button onclick="sendFAQ('payment')">Payment Methods</button>
+      <button onclick="sendFAQ('order')">Order Tracking</button>
+    </div>
+  </div>
+  <div id="chat-footer">
+    <input type="text" id="chat-input" placeholder="Type your question..." />
+    <button id="send-btn">Send</button>
+  </div>
+</div>
    
 </main>
 <div id="chatbot-icon" style="
@@ -336,6 +352,7 @@ chatInput.addEventListener("keypress", (e) => {
 
 </script>
 </html>
+
 
 
 
