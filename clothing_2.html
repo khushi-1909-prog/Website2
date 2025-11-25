@@ -101,18 +101,23 @@
       cursor: pointer;
       font-size: 14px;
     }
+  #faq-buttons button {
+  width: 100%;
+  text-align: left;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  background: #fafafa;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
 
-    #faq-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 5px;
-      margin-bottom: 10px;
-    }
+#faq-buttons button:hover {
+  background: #e8f1ff;
+}
 
 
-    #faq-buttons button:hover {
-      background: #e1f5fe;
-    }
+   
   </style>
 </head>
 
@@ -122,7 +127,8 @@
     <h1 class="brand">Better Buy</h1>
     <a href="#" class="icon-btn" aria-label="Cart"><i class="fas fa-bag-shopping"></i></a>
    
-    
+
+
   </header>
 <main class="container">
   <!-- CENTERED TOP BUTTONS -->
@@ -205,7 +211,10 @@
     </section>
  <div id="chatbot">
   <div id="chat-header">Better Buy Assistant</div>
-  <div id="chat-body"></div>
+  <div id="chat-body">
+  <div id="faq-buttons"></div>
+  </div>
+
   <div id="chat-footer">
     <input type="text" id="chat-input" placeholder="Type your question..." />
     <button id="send-btn">Send</button>
@@ -243,13 +252,9 @@ const chatbot = document.getElementById("chatbot");
 const sendBtn = document.getElementById("send-btn");
 const chatInput = document.getElementById("chat-input");
 const chatBody = document.getElementById("chat-body");
+const faqContainer = document.getElementById("faq-buttons");
 
-// Show/hide chatbot
-chatbotIcon.addEventListener("click", () => {
-  chatbot.style.display = chatbot.style.display === "flex" ? "none" : "flex";
-});
-
-// All full questions with their detailed answers
+// All questions + answers
 const qa = [
   {
     question: "Why do some shoes feel lighter even when they’re the same size?",
@@ -259,36 +264,44 @@ This helps reduce fatigue during sports or long wear, even if both pairs are tec
   {
     question: "Why do my running shoes lose comfort after a few months?",
     answer: `Cushioning foams compress with repeated use, reducing shock absorption. 
-Most athletic shoes perform best for about 500–800 km before the midsoles start to lose their elasticity, which affects comfort and protection.`
+Most athletic shoes perform best for about 500–800 km before midsoles begin to lose elasticity.`
   },
   {
     question: "How do I know which shoe suits my foot arch?",
-    answer: `Your foot can have a low, normal, or high arch. Low arches often roll inward (overpronation) and need stable soles. 
-High arches roll outward and need extra cushioning. You can check by doing a simple wet footprint test.`
+    answer: `Low arches need stability, high arches need cushioning.  
+You can check your arch type using the wet footprint test.`
   },
   {
-    question: "Did you know breathability affects comfort?",
-    answer: `Shoes made from mesh or knit fabrics allow air to circulate and keep feet dry. 
-Less breathable materials trap heat and moisture, leading to odor or blisters—especially in warm climates or long wear.`
+    question: "Does breathability affect comfort?",
+    answer: `Breathable mesh fabrics keep feet cool and dry.  
+Non-porous materials trap sweat, causing odor and blisters.`
   },
   {
-    question: "Want to learn why leather shoes need care?",
-    answer: `Leather loses natural oils over time. Conditioning replenishes these oils, prevents cracks, and keeps the material supple. 
-It also enhances water resistance and extends the shoe’s lifespan.`
+    question: "Why do leather shoes need care?",
+    answer: `Leather loses natural oils over time. Conditioning restores softness, prevents cracks, and extends shoe life.`
   },
   {
-    question: "Why do our feet sweat more in some shoes than others?",
-    answer: `Sweat regulation depends on breathability, fiber structure, and microclimate inside the shoe. 
-Non-porous materials trap humidity, raising temperature and bacterial activity. Breathable textiles maintain a cooler, drier micro-environment.`
-  },
-  {
-    question: "Curious why some shoes grip better than others?",
-    answer: `Grip comes from outsole design—the tread pattern, depth, and rubber type. 
-Trail shoes have deep lugs for traction on uneven ground, while smoother soles work best on flat indoor surfaces. Rubber compounds also affect grip and durability.`
+    question: "Why do shoes grip better on some surfaces?",
+    answer: `Grip depends on rubber quality and tread patterns.  
+Trail shoes have deeper lugs; indoor shoes have smoother soles.`
   }
 ];
 
-// Add a message to chat
+// Show predefined questions inside chatbot
+function loadFAQ() {
+  faqContainer.innerHTML = "";
+  qa.forEach((item, index) => {
+    const btn = document.createElement("button");
+    btn.textContent = item.question;
+    btn.addEventListener("click", () => {
+      addMessage(item.question, "user");
+      setTimeout(() => addMessage(item.answer, "bot"), 300);
+    });
+    faqContainer.appendChild(btn);
+  });
+}
+
+// Add message to chat
 function addMessage(msg, sender) {
   const div = document.createElement("div");
   div.classList.add("msg", sender);
@@ -297,29 +310,36 @@ function addMessage(msg, sender) {
   chatBody.scrollTop = chatBody.scrollHeight;
 }
 
-// Check if user message matches a full question
-function getAnswer(userMsg) {
-  const msgLower = userMsg.toLowerCase();
-  for (let i = 0; i < qa.length; i++) {
-    const questionLower = qa[i].question.toLowerCase();
-    if (msgLower.includes(questionLower) || questionLower.includes(msgLower)) {
-      return qa[i].answer;
-    }
-  }
-  return "Sorry, I couldn't understand your question. Try asking about shoe weight, comfort, foot arch, breathability, leather care, sweat, or grip.";
-}
+// Toggle chatbot
+chatbotIcon.addEventListener("click", () => {
+  const open = chatbot.style.display === "flex";
+  chatbot.style.display = open ? "none" : "flex";
+  if (!open) loadFAQ();  // load questions when opened
+});
 
-// Send button click
+// Manual typing still works
 sendBtn.addEventListener("click", () => {
   const userMsg = chatInput.value.trim();
   if (!userMsg) return;
   addMessage(userMsg, "user");
-  const reply = getAnswer(userMsg);
-  setTimeout(() => addMessage(reply, "bot"), 600);
+
+  // Check if user typed any known question
+  const reply = findAnswer(userMsg);
+  setTimeout(() => addMessage(reply, "bot"), 400);
   chatInput.value = "";
 });
 
-// Optional: pressing Enter sends the message
+function findAnswer(userMsg) {
+  const text = userMsg.toLowerCase();
+  for (const item of qa) {
+    if (text.includes(item.question.toLowerCase())) {
+      return item.answer;
+    }
+  }
+  return "Please click one of the questions above to get an instant answer.";
+}
+
+// Press Enter to send
 chatInput.addEventListener("keypress", (e) => {
   if (e.key === "Enter") sendBtn.click();
 });
@@ -327,6 +347,7 @@ chatInput.addEventListener("keypress", (e) => {
 
 </script>
 </html>
+
 
 
 
