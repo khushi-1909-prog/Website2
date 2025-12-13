@@ -141,6 +141,9 @@
     <button class="btn small">✨ Styling</button>
     <span class="badge">NEW</span>
     </a>
+     <button class="btn small" id="chatbot-btn">
+    💬 Chatbot
+    </button>
 
     
   </div>
@@ -222,32 +225,14 @@
 </div>
 
 </main>
-<div id="chatbot-icon" style="
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  background: royalblue;
-  color: white;
-  width: 55px;
-  height: 55px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 26px;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-  z-index: 1000;
-">
-  💬
-</div> 
+ 
 <footer class="footer">© 2025 Better Buy · All rights reserved</footer>
 </body>
     
     
     
   <script>
-const chatbotIcon = document.getElementById("chatbot-icon");
+const chatbotBtn = document.getElementById("chatbot-btn");
 const chatbot = document.getElementById("chatbot");
 const sendBtn = document.getElementById("send-btn");
 const chatInput = document.getElementById("chat-input");
@@ -311,10 +296,10 @@ function addMessage(msg, sender) {
 }
 
 // Toggle chatbot
-chatbotIcon.addEventListener("click", () => {
+chatbotBtn.addEventListener("click", () => {
   const open = chatbot.style.display === "flex";
   chatbot.style.display = open ? "none" : "flex";
-  if (!open) loadFAQ();  // load questions when opened
+  if (!open) loadFAQ();
 });
 
 // Manual typing still works
@@ -347,6 +332,7 @@ chatInput.addEventListener("keypress", (e) => {
 
 </script>
 </html>
+
 
 
 
