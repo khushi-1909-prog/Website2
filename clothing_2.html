@@ -329,17 +329,25 @@ Trail shoes have deeper lugs; indoor shoes have smoother soles.`
 // Show predefined questions inside chatbot
 function loadFAQ() {
   chatBody.innerHTML = "";
+
   addMessage(
-    "👋 Hi! Please enter a number to choose a question:\n\n" +
-    "1️⃣ Shoes feel lighter\n" +
-    "2️⃣ Running shoes lose comfort\n" +
-    "3️⃣ Shoe for foot arch\n" +
-    "4️⃣ Breathability & comfort\n" +
-    "5️⃣ Leather shoe care\n" +
-    "6️⃣ Shoe grip on surfaces",
+`Hi! Please enter the number of the question you want to ask:
+
+1️⃣ Why do some shoes feel lighter even when they’re the same size?
+
+2️⃣ Why do my running shoes lose comfort after a few months?
+
+3️⃣ How do I know which shoe suits my foot arch?
+
+4️⃣ Does breathability affect shoe comfort?
+
+5️⃣ Why do leather shoes need regular care?
+
+6️⃣ Why do shoes grip better on some surfaces?`,
     "bot"
   );
 }
+
 
 
 // Add message to chat
@@ -379,11 +387,11 @@ function findAnswer(userMsg) {
     const q = qa[num - 1];
 
     // Show question
-    addMessage(`❓ ${q.question}`, "bot");
+    addMessage(` ${q.question}`, "bot");
 
     // Show answer
     setTimeout(() => {
-      addMessage(`💡 ${q.answer}`, "bot");
+      addMessage(` ${q.answer}`, "bot");
 
       // Show buttons
       showActionButtons();
@@ -426,6 +434,7 @@ chatInput.addEventListener("keypress", (e) => {
 
 </script>
 </html>
+
 
 
 
