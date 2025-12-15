@@ -187,22 +187,26 @@
     }
   }
 
-  // Optionally hide clothing section initially
+<script>
   window.onload = function () {
-    document.getElementById("clothing").style.display = "none";
-  };
-   window.onload = function () {
     const popup = document.getElementById("order-popup");
     const closeBtn = document.getElementById("close-popup");
 
-    // Show popup on page load
+    // Show popup
     popup.style.display = "flex";
 
-    // Close popup
+    // Auto close after 3 seconds
+    setTimeout(() => {
+      popup.style.display = "none";
+    }, 3000);
+
+    // Manual close
     closeBtn.onclick = function () {
       popup.style.display = "none";
     };
   };
+</script>
+
 </script>
 
 
@@ -223,5 +227,6 @@
 
 </body>
 </html>
+
 
 
