@@ -331,19 +331,14 @@ function loadFAQ() {
   chatBody.innerHTML = "";
 
   addMessage(
-`Hi! Please enter the number of the question you want to ask:
-
-1️⃣ Why do some shoes feel lighter even when they’re the same size?
-
-2️⃣ Why do my running shoes lose comfort after a few months?
-
-3️⃣ How do I know which shoe suits my foot arch?
-
-4️⃣ Does breathability affect shoe comfort?
-
-5️⃣ Why do leather shoes need regular care?
-
-6️⃣ Why do shoes grip better on some surfaces?`,
+    `<strong>Choose any:</strong><br><br>
+     1️⃣ Why do some shoes feel lighter even when they’re the same size?<br><br>
+     2️⃣ Why do my running shoes lose comfort after a few months?<br><br>
+     3️⃣ How do I know which shoe suits my foot arch?<br><br>
+     4️⃣ Does breathability affect shoe comfort?<br><br>
+     5️⃣ Why do leather shoes need regular care?<br><br>
+     6️⃣ Why do shoes grip better on some surfaces?<br><br>
+     <em>👉Type the question number (1–6)</em>`,
     "bot"
   );
 }
@@ -354,10 +349,18 @@ function loadFAQ() {
 function addMessage(msg, sender) {
   const div = document.createElement("div");
   div.classList.add("msg", sender);
-  div.textContent = msg;
+
+  // 👇 Use innerHTML for bot, textContent for user
+  if (sender === "bot") {
+    div.innerHTML = msg;
+  } else {
+    div.textContent = msg;
+  }
+
   chatBody.appendChild(div);
   chatBody.scrollTop = chatBody.scrollHeight;
 }
+
 
 // Toggle chatbot
 chatbotBtn.addEventListener("click", () => {
@@ -434,6 +437,7 @@ chatInput.addEventListener("keypress", (e) => {
 
 </script>
 </html>
+
 
 
 
