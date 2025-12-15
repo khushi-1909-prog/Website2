@@ -188,23 +188,21 @@
   }
 
 <script>
+ <script>
   window.onload = function () {
     const popup = document.getElementById("order-popup");
     const closeBtn = document.getElementById("close-popup");
 
-    // Show popup
+    // Show popup on page load
     popup.style.display = "flex";
 
-    // Auto close after 3 seconds
-    setTimeout(() => {
-      popup.style.display = "none";
-    }, 3000);
-
-    // Manual close
+    // Close popup
     closeBtn.onclick = function () {
       popup.style.display = "none";
     };
   };
+</script>
+
 </script>
 
 </script>
@@ -227,6 +225,7 @@
 
 </body>
 </html>
+
 
 
 
