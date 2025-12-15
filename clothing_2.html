@@ -295,16 +295,14 @@ Trail shoes have deeper lugs; indoor shoes have smoother soles.`
 // Show predefined questions inside chatbot
 function loadFAQ() {
   faqContainer.innerHTML = "";
-  qa.forEach((item, index) => {
-    const btn = document.createElement("button");
-    btn.textContent = item.question;
-    btn.addEventListener("click", () => {
-      addMessage(item.question, "user");
-      setTimeout(() => addMessage(item.answer, "bot"), 300);
-    });
-    faqContainer.appendChild(btn);
-  });
+
+  addMessage(
+    "Please choose a question by typing its number:\n\n" +
+    qa.map((q, i) => `${i + 1}. ${q.question}`).join("\n"),
+    "bot"
+  );
 }
+
 
 // Add message to chat
 function addMessage(msg, sender) {
@@ -329,20 +327,39 @@ sendBtn.addEventListener("click", () => {
   addMessage(userMsg, "user");
 
   // Check if user typed any known question
-  const reply = findAnswer(userMsg);
+ const reply = findAnswer(userMsg);
+if (reply) {
   setTimeout(() => addMessage(reply, "bot"), 400);
+}
   chatInput.value = "";
 });
 
 function findAnswer(userMsg) {
-  const text = userMsg.toLowerCase();
-  for (const item of qa) {
-    if (text.includes(item.question.toLowerCase())) {
-      return item.answer;
-    }
+  const num = parseInt(userMsg.trim());
+
+  // If valid question number
+  if (!isNaN(num) && num >= 1 && num <= qa.length) {
+    const selected = qa[num - 1];
+
+    return (
+      `❓ ${selected.question}\n\n` +
+      `💡 ${selected.answer}\n\n` +
+      `What would you like to do next?\n` +
+      `1️⃣ Ask another question (enter a number)\n` +
+      `2️⃣ Exit & fill the form`
+    );
   }
-  return "Please click one of the questions above to get an instant answer.";
+
+  // If user wants to exit
+  if (userMsg.trim() === "2") {
+    window.location.href = "https://forms.gle/YOUR_GOOGLE_FORM_LINK";
+    return "Redirecting you to the form…";
+  }
+
+  // Default message
+  return "Please enter a valid question number (1–6) or 2 to exit.";
 }
+
 
 // Press Enter to send
 chatInput.addEventListener("keypress", (e) => {
@@ -363,6 +380,7 @@ chatInput.addEventListener("keypress", (e) => {
 
 </script>
 </html>
+
 
 
 
