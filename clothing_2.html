@@ -115,6 +115,25 @@
 #faq-buttons button:hover {
   background: #e8f1ff;
 }
+/* TOP BUTTON GROUP FIX */
+.btn-group {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  flex-wrap: wrap;          /* 🔥 allows wrapping on mobile */
+}
+
+/* SMALL BUTTON STYLE */
+.btn.small {
+  padding: 6px 10px;        /* smaller height & width */
+  font-size: 12px;
+  border-radius: 8px;
+  white-space: nowrap;      /* keeps text in one line */
+}
+.btn.small {
+  line-height: 1.2;
+}
+
 
 
    
@@ -329,9 +348,21 @@ chatInput.addEventListener("keypress", (e) => {
   if (e.key === "Enter") sendBtn.click();
 });
 
+@media (max-width: 480px) {
+  .btn-group {
+    gap: 5px;
+  }
+
+  .btn.small {
+    padding: 5px 8px;
+    font-size: 11px;
+  }
+}
+
 
 </script>
 </html>
+
 
 
 
