@@ -143,6 +143,29 @@
     font-size: 11px;
   }
 }
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.action-buttons button {
+  padding: 6px 10px;
+  font-size: 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.next-btn {
+  background: #007bff;
+  color: #fff;
+}
+
+.exit-btn {
+  background: #28a745;
+  color: #fff;
+}
 
 
 
@@ -305,11 +328,15 @@ Trail shoes have deeper lugs; indoor shoes have smoother soles.`
 
 // Show predefined questions inside chatbot
 function loadFAQ() {
-  faqContainer.innerHTML = "";
-
+  chatBody.innerHTML = "";
   addMessage(
-    "Please choose a question by typing its number:\n\n" +
-    qa.map((q, i) => `${i + 1}. ${q.question}`).join("\n"),
+    "👋 Hi! Please enter a number to choose a question:\n\n" +
+    "1️⃣ Shoes feel lighter\n" +
+    "2️⃣ Running shoes lose comfort\n" +
+    "3️⃣ Shoe for foot arch\n" +
+    "4️⃣ Breathability & comfort\n" +
+    "5️⃣ Leather shoe care\n" +
+    "6️⃣ Shoe grip on surfaces",
     "bot"
   );
 }
@@ -346,29 +373,47 @@ if (reply) {
 });
 
 function findAnswer(userMsg) {
-  const num = parseInt(userMsg.trim());
+  const num = parseInt(userMsg);
 
-  // If valid question number
   if (!isNaN(num) && num >= 1 && num <= qa.length) {
-    const selected = qa[num - 1];
+    const q = qa[num - 1];
 
-    return (
-      `❓ ${selected.question}\n\n` +
-      `💡 ${selected.answer}\n\n` +
-      `What would you like to do next?\n` +
-      `1️⃣ Ask another question (enter a number)\n` +
-      `2️⃣ Exit & fill the form`
-    );
+    // Show question
+    addMessage(`❓ ${q.question}`, "bot");
+
+    // Show answer
+    setTimeout(() => {
+      addMessage(`💡 ${q.answer}`, "bot");
+
+      // Show buttons
+      showActionButtons();
+    }, 300);
+
+    return null;
   }
 
-  // If user wants to exit
-  if (userMsg.trim() === "2") {
-    window.location.href = "https://forms.gle/YOUR_GOOGLE_FORM_LINK";
-    return "Redirecting you to the form…";
-  }
+  return "❗ Please enter a valid number (1–6).";
+}
+function showActionButtons() {
+  const wrapper = document.createElement("div");
+  wrapper.className = "action-buttons bot";
 
-  // Default message
-  return "Please enter a valid question number (1–6) or 2 to exit.";
+  const nextBtn = document.createElement("button");
+  nextBtn.textContent = "🔁 Ask another question";
+  nextBtn.className = "next-btn";
+  nextBtn.onclick = () => loadFAQ();
+
+  const exitBtn = document.createElement("button");
+  exitBtn.textContent = "📝 Fill the form";
+  exitBtn.className = "exit-btn";
+  exitBtn.onclick = () => {
+    window.location.href = "https://forms.gle/8oWUwoHg4DD9p9DH8";
+  };
+
+  wrapper.appendChild(nextBtn);
+  wrapper.appendChild(exitBtn);
+  chatBody.appendChild(wrapper);
+  chatBody.scrollTop = chatBody.scrollHeight;
 }
 
 
@@ -381,6 +426,7 @@ chatInput.addEventListener("keypress", (e) => {
 
 </script>
 </html>
+
 
 
 
