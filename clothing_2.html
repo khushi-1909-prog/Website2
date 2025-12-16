@@ -432,11 +432,19 @@ function showActionButtons() {
 chatInput.addEventListener("keypress", (e) => {
   if (e.key === "Enter") sendBtn.click();
 });
+window.addEventListener("load", () => {
+  const params = new URLSearchParams(window.location.search);
 
+  if (params.get("openChatbot") === "true") {
+    chatbot.style.display = "flex";
+    loadFAQ(); // show questions neatly
+  }
+});
 
 
 </script>
 </html>
+
 
 
 
