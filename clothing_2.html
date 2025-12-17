@@ -166,6 +166,23 @@
   background: #28a745;
   color: #fff;
 }
+.btn-with-badge {
+  position: relative;
+  display: inline-block;
+}
+
+.badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: red;
+  color: #fff;
+  font-size: 9px;
+  padding: 2px 6px;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
 
 
 
@@ -195,9 +212,13 @@
     <span class="badge">NEW</span>
     </a>
      
-    <button class="btn small" id="chatbot-btn">
-     💬 Chatbot
-    </button>
+    <a href="javascript:void(0)" class="btn-with-badge" id="chatbot-btn-wrapper">
+  <button class="btn small" id="chatbot-btn">
+    💬 Chatbot
+  </button>
+  <span class="badge">NEW</span>
+</a>
+
 
     
   </div>
@@ -444,6 +465,7 @@ window.addEventListener("load", () => {
 
 </script>
 </html>
+
 
 
 
