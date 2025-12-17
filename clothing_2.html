@@ -399,12 +399,15 @@ function resetInactivityTimer() {
 // Open / close chatbot
 chatbotBtn.addEventListener("click", () => {
   const isOpen = chatbot.style.display === "flex";
+
   chatbot.style.display = isOpen ? "none" : "flex";
 
   if (!isOpen) {
-    resetInactivityTimer(); // start timer when opened
+    loadFAQ();              // ✅ ADD THIS
+    resetInactivityTimer(); // keep your timer
   }
 });
+
 
 // Reset timer on interactions
 ["click", "keydown", "mousemove", "scroll"].forEach(event => {
@@ -490,6 +493,7 @@ window.addEventListener("load", () => {
 
 </script>
 </html>
+
 
 
 
