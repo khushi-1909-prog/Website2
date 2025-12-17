@@ -384,11 +384,36 @@ function addMessage(msg, sender) {
 
 
 // Toggle chatbot
+
+let inactivityTimer;
+
+// Reset inactivity timer
+function resetInactivityTimer() {
+  clearTimeout(inactivityTimer);
+
+  inactivityTimer = setTimeout(() => {
+    chatbot.style.display = "none";
+  }, 2000); // 2 seconds
+}
+
+// Open / close chatbot
 chatbotBtn.addEventListener("click", () => {
-  const open = chatbot.style.display === "flex";
-  chatbot.style.display = open ? "none" : "flex";
-  if (!open) loadFAQ();
+  const isOpen = chatbot.style.display === "flex";
+  chatbot.style.display = isOpen ? "none" : "flex";
+
+  if (!isOpen) {
+    resetInactivityTimer(); // start timer when opened
+  }
 });
+
+// Reset timer on interactions
+["click", "keydown", "mousemove", "scroll"].forEach(event => {
+  chatbot.addEventListener(event, resetInactivityTimer);
+});
+
+// Reset timer when typing
+chatInput.addEventListener("input", resetInactivityTimer);
+
 
 // Manual typing still works
 sendBtn.addEventListener("click", () => {
@@ -465,6 +490,7 @@ window.addEventListener("load", () => {
 
 </script>
 </html>
+
 
 
 
