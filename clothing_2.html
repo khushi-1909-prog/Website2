@@ -190,7 +190,7 @@
   width: 100%;
   height: 100%;
   background: rgba(0,0,0,0.6);
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   z-index: 2000;
@@ -556,14 +556,7 @@ function showActionButtons() {
 chatInput.addEventListener("keypress", (e) => {
   if (e.key === "Enter") sendBtn.click();
 });
-window.addEventListener("load", () => {
-  const params = new URLSearchParams(window.location.search);
 
-  if (params.get("openChatbot") === "true") {
-    chatbot.style.display = "flex";
-    loadFAQ(); // show questions neatly
-  }
-});
 
 window.onload = function () {
 
@@ -571,7 +564,7 @@ window.onload = function () {
   const popup = document.getElementById("order-popup");
   const closeBtn = document.getElementById("close-popup");
 
-  // ✅ If coming from intro → disable chatbot
+  // 🔹 If coming from intro → disable chatbot
   if (params.get("fromIntro") === "true") {
     const chatbotBtn = document.getElementById("chatbot-btn");
     chatbotBtn.disabled = true;
@@ -579,12 +572,16 @@ window.onload = function () {
     chatbotBtn.style.cursor = "not-allowed";
   }
 
-  // ✅ Show popup ONLY if NOT coming from styling page
-  if (params.get("openChatbot") !== "true") {
+  // 🔹 If coming from styling → open chatbot
+  if (params.get("openChatbot") === "true") {
+    chatbot.style.display = "flex";
+    loadFAQ();
+  } 
+  else {
+    // 🔹 Otherwise show popup
     popup.style.display = "flex";
   }
 
-  // Close popup
   closeBtn.onclick = function () {
     popup.style.display = "none";
   };
@@ -593,6 +590,7 @@ window.onload = function () {
 
 </script>
 </html>
+
 
 
 
