@@ -565,34 +565,35 @@ window.addEventListener("load", () => {
   }
 });
 
- window.onload = function () {
+window.onload = function () {
 
-  // ✅ Disable chatbot if coming from intro page
   const params = new URLSearchParams(window.location.search);
+  const popup = document.getElementById("order-popup");
+  const closeBtn = document.getElementById("close-popup");
 
+  // ✅ If coming from intro → disable chatbot
   if (params.get("fromIntro") === "true") {
     const chatbotBtn = document.getElementById("chatbot-btn");
-
     chatbotBtn.disabled = true;
     chatbotBtn.style.opacity = "0.5";
     chatbotBtn.style.cursor = "not-allowed";
   }
 
-  // Your existing popup code
-  const popup = document.getElementById("order-popup");
-  const closeBtn = document.getElementById("close-popup");
+  // ✅ Show popup ONLY if NOT coming from styling page
+  if (params.get("openChatbot") !== "true") {
+    popup.style.display = "flex";
+  }
 
-  popup.style.display = "flex";
-
+  // Close popup
   closeBtn.onclick = function () {
     popup.style.display = "none";
   };
 };
 
 
-
 </script>
 </html>
+
 
 
 
