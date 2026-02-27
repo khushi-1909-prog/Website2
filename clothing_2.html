@@ -565,23 +565,35 @@ window.addEventListener("load", () => {
   }
 });
 
-  window.onload = function () {
-    const popup = document.getElementById("order-popup");
-    const closeBtn = document.getElementById("close-popup");
+ window.onload = function () {
 
-    // Show popup on page load
-    popup.style.display = "flex";
+  // ✅ Disable chatbot if coming from intro page
+  const params = new URLSearchParams(window.location.search);
 
-    // Close popup
-    closeBtn.onclick = function () {
-      popup.style.display = "none";
-    };
+  if (params.get("fromIntro") === "true") {
+    const chatbotBtn = document.getElementById("chatbot-btn");
+
+    chatbotBtn.disabled = true;
+    chatbotBtn.style.opacity = "0.5";
+    chatbotBtn.style.cursor = "not-allowed";
+  }
+
+  // Your existing popup code
+  const popup = document.getElementById("order-popup");
+  const closeBtn = document.getElementById("close-popup");
+
+  popup.style.display = "flex";
+
+  closeBtn.onclick = function () {
+    popup.style.display = "none";
   };
+};
 
 
 
 </script>
 </html>
+
 
 
 
